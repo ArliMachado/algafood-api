@@ -22,32 +22,15 @@ public class CadastroRestauranteService {
 
     Long cozinhaId = restaurante.getCozinha().getId();
 
-    Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
-
-    if (cozinha == null) {
-      throw new EntidadeNaoEncontradaException(
-          String.format("Não existe cadastro de cozinha com código %d", cozinhaId));
-    }
+    Cozinha cozinha = cozinhaRepository.findById(cozinhaId)
+        .orElseThrow(() -> new EntidadeNaoEncontradaException(
+            String.format("Não existe cadastro de cozinha com código %d",
+                cozinhaId)));
 
     restaurante.setCozinha(cozinha);
 
-    return restauranteRepository.salvar(restaurante);
+    return restauranteRepository.save(restaurante);
 
   }
-
-  // public void excluir(Long restauranteId) {
-  // try {
-  // restauranteRepository.remover(restauranteId);
-
-  // } catch (EmptyResultDataAccessException e) {
-  // throw new EntidadeNaoEncontradaException(
-  // String.format("Não existe um cadastro de restaurante com código %d",
-  // restauranteId));
-  // } catch (DataIntegrityViolationException e) {
-  // throw new EntidadeEmUsoException(
-  // String.format("Restaurante de código %d não pode ser removida, pois está em
-  // uso", restauranteId));
-  // }
-  // }
 
 }
