@@ -1,15 +1,15 @@
 package com.algaworks.algafood.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.domain.model.FormaPagamento;
@@ -32,21 +32,15 @@ public class FormaPagamentoController {
   }
 
   @GetMapping("/{formaPagamentoId}")
-  public ResponseEntity<FormaPagamento> buscarPorId(@PathVariable Long formaPagamentoId) {
-    Optional<FormaPagamento> formaPagamento = formaPagamentoRepository.findById(formaPagamentoId);
-
-    if (formaPagamento.isEmpty()) {
-      return ResponseEntity.notFound().build();
-    }
-
-    return ResponseEntity.ok(formaPagamento.get());
+  public FormaPagamento buscarPorId(@PathVariable Long formaPagamentoId) {
+    return cadastroFormaPagamento.buscarOuFalhar(formaPagamentoId);
   }
 
   @PostMapping
-  public ResponseEntity<FormaPagamento> adicionar(@RequestBody FormaPagamento formaPagamento) {
-    formaPagamento = cadastroFormaPagamento.salvar(formaPagamento);
+  @ResponseStatus(HttpStatus.CREATED)
+  public FormaPagamento adicionar(@RequestBody FormaPagamento formaPagamento) {
+    return cadastroFormaPagamento.salvar(formaPagamento);
 
-    return ResponseEntity.ok(formaPagamento);
   }
 
 }
