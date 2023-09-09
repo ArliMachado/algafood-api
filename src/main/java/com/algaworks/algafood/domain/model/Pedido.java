@@ -1,7 +1,7 @@
 package com.algaworks.algafood.domain.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,16 +43,16 @@ public class Pedido {
   private StatusPedido status;
 
   @CreationTimestamp
-  private LocalDateTime dataCriacao;
+  private OffsetDateTime dataCriacao;
 
   @Column
-  private LocalDateTime dataConfirmacao;
+  private OffsetDateTime dataConfirmacao;
 
   @Column
-  private LocalDateTime dataCancelamento;
+  private OffsetDateTime dataCancelamento;
 
   @Column
-  private LocalDateTime dataEntrega;
+  private OffsetDateTime dataEntrega;
 
   @Embedded
   private Endereco enderecoEntrega;
