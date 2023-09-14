@@ -1,4 +1,4 @@
-package com.algaworks.core.validation;
+package com.algaworks.algafood.core.validation;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 

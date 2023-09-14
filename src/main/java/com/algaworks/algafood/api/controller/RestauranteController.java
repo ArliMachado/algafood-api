@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,8 @@ import com.algaworks.algafood.api.assembler.RestauranteInputDisassembler;
 import com.algaworks.algafood.api.assembler.RestauranteModelAssembler;
 import com.algaworks.algafood.api.model.RestauranteModel;
 import com.algaworks.algafood.api.model.input.RestauranteInput;
+import com.algaworks.algafood.domain.exception.CidadeNaoEncontradaException;
+import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Restaurante;
@@ -61,7 +64,7 @@ public class RestauranteController {
 
       return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante));
 
-    } catch (EntidadeNaoEncontradaException e) {
+    } catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
       throw new NegocioException(e.getMessage());
     }
   }
@@ -79,6 +82,18 @@ public class RestauranteController {
     } catch (EntidadeNaoEncontradaException e) {
       throw new NegocioException(e.getMessage());
     }
+  }
+
+  @PutMapping("/{restauranteId}/ativo")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void ativar(@PathVariable Long restauranteId) {
+    cadastroRestaurante.ativar(restauranteId);
+  }
+
+  @DeleteMapping("/{restauranteId}/ativo")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void inativar(@PathVariable Long restauranteId) {
+    cadastroRestaurante.inativar(restauranteId);
   }
 
 }

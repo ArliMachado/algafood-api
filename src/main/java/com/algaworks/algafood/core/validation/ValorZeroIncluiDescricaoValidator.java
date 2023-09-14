@@ -1,4 +1,4 @@
-package com.algaworks.core.validation;
+package com.algaworks.algafood.core.validation;
 
 import java.math.BigDecimal;
 
@@ -27,10 +27,10 @@ public class ValorZeroIncluiDescricaoValidator implements ConstraintValidator<Va
 
     try {
       BigDecimal valor = (BigDecimal) BeanUtils.getPropertyDescriptor(objetoValidacao.getClass(), valorField)
-        .getReadMethod().invoke(objetoValidacao);
-      
+          .getReadMethod().invoke(objetoValidacao);
+
       String descricao = (String) BeanUtils.getPropertyDescriptor(objetoValidacao.getClass(), descricaoField)
-        .getReadMethod().invoke(objetoValidacao);
+          .getReadMethod().invoke(objetoValidacao);
 
       if (valor != null && BigDecimal.ZERO.compareTo(valor) == 0 && descricao != null) {
         valido = descricao.toLowerCase().contains(this.descricaoObrigatoria.toLowerCase());
