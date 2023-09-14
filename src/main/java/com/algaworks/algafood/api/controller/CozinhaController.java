@@ -52,10 +52,10 @@ public class CozinhaController {
 
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping
-  public Cozinha adicionar(@RequestBody @Valid CozinhaInput cozinhaInput) {
+  public CozinhaModel adicionar(@RequestBody @Valid CozinhaInput cozinhaInput) {
     Cozinha cozinha = cozinhaInputDisassembler.toDomainObject(cozinhaInput);
 
-    return cadastroCozinha.salvar(cozinha);
+    return cozinhaModelAssembler.toModel(cadastroCozinha.salvar(cozinha));
   }
 
   @PutMapping("/{cozinhaId}")
